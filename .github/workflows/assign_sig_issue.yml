@@ -1,0 +1,25 @@
+name: Auto Assign to Project(s)
+
+on:
+  issues:
+    types: [opened, closed]
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  assign_one_project:
+    runs-on: ubuntu-latest
+    name: Assign Issue
+    steps:
+    - name: Assign NEW issues
+      uses: srggrs/assign-one-project-github-action@1.2.0
+      if: github.event.action == 'opened'
+      with:
+        project: 'https://github.com/ran-huang/test-github-action/projects/1'
+        column_name: 'Issue: Backlog'
+    - name: Assign closed issues
+      uses: srggrs/assign-one-project-github-action@1.2.0
+      if: github.event.action == 'closed'
+      with:
+        project: 'https://github.com/ran-huang/test-github-action/projects/1'
+        column_name: 'Issue: Resolved'
