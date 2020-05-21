@@ -5,6 +5,7 @@ on:
     types: [opened, labeled, closed, unlabeled]
   pull_request:
     types: [opened, labeled, closed, unlabeled]
+  push:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -15,13 +16,17 @@ jobs:
     steps:
     - name: Assign new prs
       uses: srggrs/assign-one-project-github-action@1.2.0
-      if: github.event.action == 'opened' && github.event == 'pull_request'
+      if: |
+        github.event.action == 'opened' && 
+        github.event == 'pull_request'
       with:
         project: 'https://github.com/ran-huang/test-github-action/projects/1'
         column_name: 'PR: In progress'
     - name: Assign new issues
       uses: srggrs/assign-one-project-github-action@1.2.0
-      if: github.event.action == 'opened' && github.event == 'issue'
+      if: |
+        github.event.action == 'opened' && 
+        github.event == 'issue'
       with:
         project: 'https://github.com/ran-huang/test-github-action/projects/1'
         column_name: 'Issue: Backlog'
