@@ -1,11 +1,8 @@
 name: Auto Assign to Project(s)
 
 on:
-  issues:
-    types: [opened, labeled, closed, unlabeled]
   pull_request:
     types: [opened, labeled, closed, unlabeled]
-  push:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -17,17 +14,10 @@ jobs:
     - name: Assign new prs
       uses: srggrs/assign-one-project-github-action@1.2.0
       if: |
-        pull_request.action == 'opened'
+        githun.event.action == 'opened'
       with:
         project: 'https://github.com/ran-huang/test-github-action/projects/1'
         column_name: 'PR: In progress'
-    - name: Assign new issues
-      uses: srggrs/assign-one-project-github-action@1.2.0
-      if: |
-        issues.action == 'opened'
-      with:
-        project: 'https://github.com/ran-huang/test-github-action/projects/1'
-        column_name: 'Issue: Backlog'
     - name: Assign Translation/Welcome PR
       uses: srggrs/assign-one-project-github-action@1.2.0
       if: |
