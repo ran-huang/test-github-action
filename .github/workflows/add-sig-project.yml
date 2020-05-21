@@ -17,10 +17,17 @@ jobs:
     - name: Assign new prs
       uses: srggrs/assign-one-project-github-action@1.2.0
       if: |
-        github.event.action == 'opened'
+        github.event.pull_request.action == 'opened'
       with:
         project: 'https://github.com/ran-huang/test-github-action/projects/1'
         column_name: 'PR: In progress'
+    - name: Assign new issues
+      uses: srggrs/assign-one-project-github-action@1.2.0
+      if: |
+        github.event.issue.action == 'opened'
+      with:
+        project: 'https://github.com/ran-huang/test-github-action/projects/1'
+        column_name: 'Issue: Backlog'
     - name: Assign Translation/Welcome PR
       uses: srggrs/assign-one-project-github-action@1.2.0
       if: |
