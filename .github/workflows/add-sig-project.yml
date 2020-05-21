@@ -13,8 +13,40 @@ jobs:
     runs-on: ubuntu-latest
     name: Assign to One Project
     steps:
-    - name: Assign NEW issues and NEW pull requests to test-project
+    - name: Assign Open Issue
       uses: srggrs/assign-one-project-github-action@1.2.0
-      if: github.event.action == 'opened'
+      if: |
+        github.event.action == 'opened' && github.event == 'issue'
       with:
         project: 'https://github.com/ran-huang/test-github-action/projects/1'
+        column_name: 'Issue: Backlog'
+    - name: Assign Closed Issue
+      uses: srggrs/assign-one-project-github-action@1.2.0
+      if: |
+        github.event.action == 'closed' && github.event == 'issue'
+      with:
+        project: 'https://github.com/ran-huang/test-github-action/projects/1'
+        column_name: 'Issue: Resolved'
+    - name: Assign Open PR
+      uses: srggrs/assign-one-project-github-action@1.2.0
+      if: |
+        github.event.action == 'opened' && github.event == 'pull_request'
+      with:
+        project: 'https://github.com/ran-huang/test-github-action/projects/1'
+        column_name: 'PR: In Progress'
+    - name: Assign Closed PR
+      uses: srggrs/assign-one-project-github-action@1.2.0
+      if: |
+        github.event.action == 'closed' &&
+        github.event == 'pull_request' &&
+        ! contains(github.event.pull_request.labels.*.name, 'translation/welcome')
+      with:
+        project: 'https://github.com/ran-huang/test-github-action/projects/1'
+        column_name: 'PR: Done'
+    - name: Assign Translation/Welcome PR
+      uses: srggrs/assign-one-project-github-action@1.2.0
+      if: |
+        contains(github.event.pull_request.labels.*.name, 'translation/welcome')
+      with:
+        project: 'https://github.com/ran-huang/test-github-action/projects/1'
+        column_name: 'Translation/Welcome'
