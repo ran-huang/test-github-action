@@ -1,8 +1,6 @@
 name: Auto Assign to Project(s)
 
-on:
-  pull_request:
-    types: [opened, labeled, closed, unlabeled]
+on: push
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
