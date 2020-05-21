@@ -14,7 +14,7 @@ jobs:
     - name: Assign new prs
       uses: srggrs/assign-one-project-github-action@1.2.0
       if: |
-        githun.event.action == 'opened'
+        github.event.action == 'opened'
       with:
         project: 'https://github.com/ran-huang/test-github-action/projects/1'
         column_name: 'PR: In progress'
