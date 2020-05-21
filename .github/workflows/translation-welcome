@@ -1,0 +1,19 @@
+name: Auto Assign to Project(s)
+
+on:
+  pull_request:
+    types: [labeled, unlabeled]
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  assign_one_project:
+    runs-on: ubuntu-latest
+    name: Assign Translation/Welcome
+    steps:
+    - name: Assign translation/welcome
+      uses: srggrs/assign-one-project-github-action@1.2.0
+      if: |
+        contains(github.event.pull-request.labels.*.name, 'translation/welcome')
+      with:
+        project: 'https://github.com/ran-huang/test-github-action/projects/2'
